@@ -18,7 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'api.apps.ApiConfig',
     'specialties.apps.SpecialtiesConfig',
-    'teams.apps.TimsConfig'
+    'teams.apps.TeamsConfig'
 ]
 
 MIDDLEWARE = [
