@@ -15,7 +15,7 @@ class Employee(models.Model):
         Position, on_delete=models.CASCADE, verbose_name='Позиция'
     )
     grade = models.ForeignKey(
-        Grade, on_delete=models.CASCADE, verbose_name='Гейд'
+        Grade, on_delete=models.CASCADE, verbose_name='Грейд'
     )
 
 
@@ -23,9 +23,9 @@ class TargetEmployee(models.Model):
     employee = models.OneToOneField(Employee, on_delete=models.CASCADE)
     position = models.ForeignKey(
         Position, on_delete=models.CASCADE, verbose_name='Позиция'
-    ) 
+    )
     grade = models.ForeignKey(
-        Grade, on_delete=models.CASCADE, verbose_name='Гейд'
+        Grade, on_delete=models.CASCADE, verbose_name='Грейд'
     )
 
 

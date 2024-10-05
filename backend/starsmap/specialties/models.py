@@ -28,9 +28,9 @@ class RequirementPosition(models.Model):
         Position, on_delete=models.CASCADE, verbose_name='Позиция'
     )
     grade = models.ForeignKey(
-        Grade, on_delete=models.CASCADE, verbose_name='Гейд'
+        Grade, on_delete=models.CASCADE, verbose_name='Грейд'
     )
     skill = models.ForeignKey(
-        Skill, on_delete=models.CASCADE, verbose_name='Гейд'
+        Skill, on_delete=models.CASCADE, verbose_name='Грейд'
     )
     rating = models.IntegerField('Оценка')

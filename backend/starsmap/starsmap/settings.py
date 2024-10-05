@@ -20,9 +20,12 @@ INSTALLED_APPS = [
     'specialties.apps.SpecialtiesConfig',
     'teams.apps.TeamsConfig',
     'drf_spectacular',
+    'rest_framework',
+    'django_filters',
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
@@ -64,14 +67,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'starsmap.wsgi.application'
 
 
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 
 AUTH_PASSWORD_VALIDATORS = [
