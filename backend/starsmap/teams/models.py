@@ -18,6 +18,9 @@ class Employee(models.Model):
         Grade, on_delete=models.CASCADE, verbose_name='Грейд'
     )
 
+    class Meta:
+        default_related_name = 'employee'
+
 
 class TargetEmployee(models.Model):
     employee = models.OneToOneField(Employee, on_delete=models.CASCADE)
@@ -36,6 +39,9 @@ class EmployeeTeam(models.Model):
     employee = models.ForeignKey(
         Employee, on_delete=models.CASCADE, verbose_name='Сотрудник'
     )
+
+    class Meta:
+        default_related_name = 'employee_team'
 
 
 class RequestTraining(models.Model):
