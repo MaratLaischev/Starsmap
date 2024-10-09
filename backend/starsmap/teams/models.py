@@ -1,64 +1,42 @@
 from django.db import models
 
-from specialties.models import Grade, Position, Skill
-
 
 class Team(models.Model):
+    """Модель команды."""
     name = models.CharField('Название', max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
 class Employee(models.Model):
-    first_name = models.CharField('Имя', max_length=100)
-    last_name = models.CharField('Фамилия', max_length=100)
-    bus_factor = models.BooleanField('Бас фактор')
-    position = models.ForeignKey(
-        Position, on_delete=models.CASCADE, verbose_name='Позиция'
-    )
-    grade = models.ForeignKey(
-        Grade, on_delete=models.CASCADE, verbose_name='Грейд'
-    )
+    """Модель сотрудника."""
+    name_surname = models.CharField('Имя', max_length=100)
+    position = models.CharField('Позиция', max_length=100)
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, null=True)
+    grade = models.CharField(max_length=50)
+    hard_skills = models.JSONField()
+    soft_skills = models.JSONField()
+    bf = models.BooleanField(default=False)
+    key = models.BooleanField(default=False)
+    education_request = models.BooleanField(default=False)
+    education_in_progress = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name_surname
 
 
-class TargetEmployee(models.Model):
-    employee = models.OneToOneField(Employee, on_delete=models.CASCADE)
-    position = models.ForeignKey(
-        Position, on_delete=models.CASCADE, verbose_name='Позиция'
-    )
-    grade = models.ForeignKey(
-        Grade, on_delete=models.CASCADE, verbose_name='Грейд'
-    )
+class Position(models.Model):
+    """Модель позиции сотрудника."""
+    name = models.CharField('Название', max_length=100)
+
+    def __str__(self):
+        return self.name
 
 
-class EmployeeTeam(models.Model):
-    team = models.ForeignKey(
-        Team, on_delete=models.CASCADE, verbose_name='Команда'
-    )
-    employee = models.ForeignKey(
-        Employee, on_delete=models.CASCADE, verbose_name='Сотрудник'
-    )
+class Grade(models.Model):
+    """Модель грейда сотрудника."""
+    grade = models.CharField(max_length=100)
 
-
-class RequestTraining(models.Model):
-    employee = models.ForeignKey(
-        Employee, on_delete=models.CASCADE, verbose_name='Сотрудник'
-    )
-    skill = models.ForeignKey(
-        Skill, on_delete=models.CASCADE, verbose_name='Скилл'
-    )
-    desired_result = models.CharField('Желаемый результат', max_length=100)
-    start_date = models.DateField('Дата начала')
-    end_date = models.DateField('Дата окончания')
-    status = models.CharField('Статут запроса', max_length=100)
-
-
-class Level(models.Model):
-    employee = models.ForeignKey(
-        Employee, on_delete=models.CASCADE, verbose_name='Сотрудник'
-    )
-    skill = models.ForeignKey(
-        Skill, on_delete=models.CASCADE, verbose_name='Скилл'
-    )
-    data = models.DateField('Дата')
-    evaluation = models.CharField('Оценка эксперта', max_length=100)
-    name = models.CharField('Название', max_length=100) # Начинающий - Экспертный
-    # accordance = models.CharField('Соответствие', max_length=100)
+    def __str__(self):
+        return self.grade

@@ -1,42 +1,47 @@
-from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
-from rest_framework.filters import OrderingFilter
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from specialties.models import Level, RequestTraining, Skill
 
-from .models import (Employee, EmployeeTeam, Level, RequestTraining,
-                     TargetEmployee, Team)
-from .serializers import (EmployeeSerializer, EmployeeTeamSerializer,
-                          LevelSerializer, RequestTrainingSerializer,
-                          TargetEmployeeSerializer, TeamSerializer)
+from .models import Employee, Team
+from .serializers import (EmployeeSerializer, LevelSerializer,
+                          RequestTrainingSerializer, SkillSerializer,
+                          SpecialityDataSerializer, TeamSerializer)
 
 
-class EmployeeViewSet(viewsets.ReadOnlyModelViewSet):
+class EmployeeViewSet(viewsets.ModelViewSet):
+    """ViewSet для сотрудников."""
     queryset = Employee.objects.all()
     serializer_class = EmployeeSerializer
-    filter_backends = [DjangoFilterBackend, OrderingFilter]
-    filterset_fields = []
-    ordering_fields = []
 
 
-class TeamViewSet(viewsets.ReadOnlyModelViewSet):
+class TeamViewSet(viewsets.ModelViewSet):
+    """ViewSet для команд."""
     queryset = Team.objects.all()
     serializer_class = TeamSerializer
 
 
-class TargetEmployeeViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = TargetEmployee.objects.all()
-    serializer_class = TargetEmployeeSerializer
+class SkillViewSet(viewsets.ModelViewSet):
+    """ViewSet для навыков."""
+    queryset = Skill.objects.all()
+    serializer_class = SkillSerializer
 
 
-class EmployeeTeamViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = EmployeeTeam.objects.all()
-    serializer_class = EmployeeTeamSerializer
+class LevelViewSet(viewsets.ModelViewSet):
+    """ViewSet для уровней навыков."""
+    queryset = Level.objects.all()
+    serializer_class = LevelSerializer
 
 
-class RequestTrainingViewSet(viewsets.ReadOnlyModelViewSet):
+class RequestTrainingViewSet(viewsets.ModelViewSet):
+    """ViewSet для запросов на обучение."""
     queryset = RequestTraining.objects.all()
     serializer_class = RequestTrainingSerializer
 
 
-class LevelViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Level.objects.all()
-    serializer_class = LevelSerializer
+class SpecialityDataView(APIView):
+    """Представление для вывода данных о специальностях по грейдам."""
+
+    def get(self, request):
+        serializer = SpecialityDataSerializer()
+        return Response(serializer.data)

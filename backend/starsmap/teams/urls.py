@@ -1,25 +1,19 @@
 from django.urls import include, path
 from rest_framework.routers import DefaultRouter
-from specialties.views import (CompetenceViewSet, GradeViewSet,
-                               PositionViewSet, RequirementPositionViewSet,
-                               SkillViewSet)
+from specialties.views import GradeDataView
 
-from .views import (EmployeeTeamViewSet, EmployeeViewSet, LevelViewSet,
-                    RequestTrainingViewSet, TargetEmployeeViewSet, TeamViewSet)
+from .views import (EmployeeViewSet, LevelViewSet, RequestTrainingViewSet,
+                    SkillViewSet, SpecialityDataView, TeamViewSet)
 
 router = DefaultRouter()
-router.register(r'employee', EmployeeViewSet)
-router.register(r'team', TeamViewSet)
-router.register(r'grade', GradeViewSet)
-router.register(r'skill', SkillViewSet)
-router.register(r'competency', CompetenceViewSet)
-router.register(r'requirement-position', RequirementPositionViewSet)
-router.register(r'position', PositionViewSet)
-router.register(r'target-employee', TargetEmployeeViewSet)
-router.register(r'employee-team', EmployeeTeamViewSet)
-router.register(r'request-traning', RequestTrainingViewSet)
-router.register(r'level', LevelViewSet)
+router.register(r'employees', EmployeeViewSet)
+router.register(r'teams', TeamViewSet)
+router.register(r'skills', SkillViewSet)
+router.register(r'levels', LevelViewSet)
+router.register(r'trainings', RequestTrainingViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('grades/', GradeDataView.as_view(), name='grades'),
+    path('specialities/', SpecialityDataView.as_view(), name='specialities'),
 ]

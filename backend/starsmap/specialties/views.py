@@ -1,14 +1,18 @@
 from rest_framework import viewsets
-
-from .models import Competence, Grade, Position, RequirementPosition, Skill
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .models import Competence, Position, RequirementPosition, Skill
 from .serializers import (CompetenceSerializer, GradeSerializer,
                           PositionSerializer, RequirementPositionSerializer,
                           SkillSerializer)
 
 
-class GradeViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Grade.objects.all()
-    serializer_class = GradeSerializer
+class GradeDataView(APIView):
+    """Представление для вывода данных о грейдах."""
+
+    def get(self, request):
+        serializer = GradeSerializer()
+        return Response(serializer.data)
 
 
 class SkillViewSet(viewsets.ReadOnlyModelViewSet):
