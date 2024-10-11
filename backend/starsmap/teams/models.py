@@ -8,22 +8,27 @@ class Team(models.Model):
 
 
 class Employee(models.Model):
-    first_name = models.CharField('Имя', max_length=100)
-    last_name = models.CharField('Фамилия', max_length=100)
-    bus_factor = models.BooleanField('Бас фактор')
+    team = models.ForeignKey(
+        Team, on_delete=models.CASCADE, verbose_name='Команда'
+    )
+    name_surname = models.CharField('Имя', max_length=100)
     position = models.ForeignKey(
         Position, on_delete=models.CASCADE, verbose_name='Позиция'
     )
     grade = models.ForeignKey(
         Grade, on_delete=models.CASCADE, verbose_name='Грейд'
     )
+    bus_factor = models.BooleanField('Бас фактор')
+    key = models.BooleanField('Ключевой сотрудник')
 
     class Meta:
         default_related_name = 'employee'
 
 
-class TargetEmployee(models.Model):
-    employee = models.OneToOneField(Employee, on_delete=models.CASCADE)
+class Target(models.Model):
+    employee = models.OneToOneField(
+        Employee, on_delete=models.CASCADE, verbose_name='Позиция'
+    )
     position = models.ForeignKey(
         Position, on_delete=models.CASCADE, verbose_name='Позиция'
     )
@@ -32,39 +37,29 @@ class TargetEmployee(models.Model):
     )
 
 
-class EmployeeTeam(models.Model):
-    team = models.ForeignKey(
-        Team, on_delete=models.CASCADE, verbose_name='Команда'
-    )
+class EmployeeSkill(models.Model):
     employee = models.ForeignKey(
-        Employee, on_delete=models.CASCADE, verbose_name='Сотрудник'
+        Employee, on_delete=models.CASCADE, verbose_name='Позиция'
     )
+    skill = models.ForeignKey(
+        Skill, on_delete=models.CASCADE, verbose_name='Скил'
+    )
+    key = models.BooleanField('Ключевой навык')
+    education_request = models.BooleanField('Образовательный запрос')
 
     class Meta:
-        default_related_name = 'employee_team'
+        default_related_name = 'employee_skill'
 
-
-class RequestTraining(models.Model):
+class EmployeeCheck(models.Model):
     employee = models.ForeignKey(
-        Employee, on_delete=models.CASCADE, verbose_name='Сотрудник'
+        Employee, on_delete=models.CASCADE, verbose_name='Позиция'
     )
     skill = models.ForeignKey(
-        Skill, on_delete=models.CASCADE, verbose_name='Скилл'
+        Skill, on_delete=models.CASCADE, verbose_name='Скил'
     )
-    desired_result = models.CharField('Желаемый результат', max_length=100)
-    start_date = models.DateField('Дата начала')
-    end_date = models.DateField('Дата окончания')
-    status = models.CharField('Статут запроса', max_length=100)
-
-
-class Level(models.Model):
-    employee = models.ForeignKey(
-        Employee, on_delete=models.CASCADE, verbose_name='Сотрудник'
-    )
-    skill = models.ForeignKey(
-        Skill, on_delete=models.CASCADE, verbose_name='Скилл'
-    )
-    data = models.DateField('Дата')
-    evaluation = models.CharField('Оценка эксперта', max_length=100)
-    name = models.CharField('Название', max_length=100) # Начинающий - Экспертный
-    # accordance = models.CharField('Соответствие', max_length=100)
+    estimation = models.IntegerField('Оценка')
+    accordance = models.BooleanField('Соответствие')
+    education_progress = models.BooleanField('Обучается')
+    
+    class Meta:
+        default_related_name = 'employee_check'

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from specialties.models import (
-    Position, Grade, Competence, Skill, RequirementPosition
+    Position, Grade, Competence, Skill, PositionRequirement
 )
 
 
@@ -13,14 +13,15 @@ class PositionAdmin(admin.ModelAdmin):
 
 class GradeAdmin(admin.ModelAdmin):
     list_display = (
-        'grade',
+        'name',
     )
 
 
 class CompetenceAdmin(admin.ModelAdmin):
     list_display = (
         'name',
-        'type'
+        'domen',
+        'type_skill'
     )
 
 
@@ -31,7 +32,7 @@ class SkillAdmin(admin.ModelAdmin):
     )
 
 
-class RequirementPositionAdmin(admin.ModelAdmin):
+class PositionRequirementAdmin(admin.ModelAdmin):
     list_display = (
         'position',
         'grade',
@@ -40,7 +41,7 @@ class RequirementPositionAdmin(admin.ModelAdmin):
     )
 
 
-admin.site.register(RequirementPosition, RequirementPositionAdmin)
+admin.site.register(PositionRequirement, PositionRequirementAdmin)
 admin.site.register(Competence, CompetenceAdmin)
 admin.site.register(Skill, SkillAdmin)
 admin.site.register(Grade, GradeAdmin)

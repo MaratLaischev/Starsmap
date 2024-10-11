@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from teams.models import (
-    Team, Employee, TargetEmployee, EmployeeTeam, RequestTraining, Level
+    Team, Employee, Target, EmployeeSkill
 )
 
 
@@ -13,53 +13,30 @@ class TeamAdmin(admin.ModelAdmin):
 
 class EmployeeAdmin(admin.ModelAdmin):
     list_display = (
-        'first_name',
-        'last_name',
+        'name_surname',
         'bus_factor',
         'position',
         'grade'
     )
 
 
-class TargetEmployeeAdmin(admin.ModelAdmin):
+class TargetAdmin(admin.ModelAdmin):
     list_display = (
         'employee',
         'position',
         'grade'
     )
 
-
-class EmployeeTeamAdmin(admin.ModelAdmin):
-    list_display = (
-        'team',
-        'employee'
-    )
-
-
-class RequestTrainingAdmin(admin.ModelAdmin):
+class EmployeeSkillAdmin(admin.ModelAdmin):
     list_display = (
         'employee',
         'skill',
-        'desired_result',
-        'start_date',
-        'end_date',
-        'status'
-    )
-
-
-class LevelAdmin(admin.ModelAdmin):
-    list_display = (
-        'employee',
-        'skill',
-        'data',
-        'evaluation',
-        'name'
+        'key',
+        'education_request'
     )
 
 
 admin.site.register(Team, TeamAdmin)
 admin.site.register(Employee, EmployeeAdmin)
-admin.site.register(TargetEmployee, TargetEmployeeAdmin)
-admin.site.register(EmployeeTeam, EmployeeTeamAdmin)
-admin.site.register(RequestTraining, RequestTrainingAdmin)
-admin.site.register(Level, LevelAdmin)
+admin.site.register(Target, TargetAdmin)
+admin.site.register(EmployeeSkill, EmployeeSkillAdmin)
