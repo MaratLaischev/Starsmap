@@ -6,7 +6,7 @@ include $(ENV_FILE)
 export $(shell sed 's/=.*//' $(ENV_FILE))
 
 # Команды
-.PHONY: help build up down migrate createsuperuser collectstatic makemigrations push import runserver
+.PHONY: help build up down migrate createsuperuser collectstatic makemigrations push import runserver lint test
 
 help: ## Показать доступные команды
 	@echo "Использование: make [команда]"
@@ -44,3 +44,9 @@ import: ## Импортирует данные в базу данных
 
 runserver: ## Запускает локальный сервер
 	python manage.py runserver
+
+lint: ## Запускает линтеры
+	flake8 . && black --check .
+
+test: ## Запускает тесты
+	python manage.py test

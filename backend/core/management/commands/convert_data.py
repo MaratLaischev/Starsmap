@@ -1,45 +1,44 @@
-import pandas as pd
 import json
 from django.core.management.base import BaseCommand
+from core.models import Employee, Skill, Competence
+
 
 class Command(BaseCommand):
-    help = 'Импорт данных из файла employees.xlsx и конвертация в формат JSON'
+    help = 'Импорт данных из файла employees.json в базу данных'
 
     def handle(self, *args, **kwargs):
+        with open('employees.json', 'r', encoding='utf-8') as f:
+            employees = json.load(f)
 
-        df = pd.read_excel('employees.xlsx')
+        for employee_data in employees:
+            employee, created = Employee.objects.get_or_create(
+                id=employee_data["employee_id"],
+                defaults={
+                    "name_surname": employee_data["employee_name_surname"],
+                    "position": employee_data["employee_position_name"],
+                    "team": employee_data["employee_team_name"],
+                    "grade": employee_data["employee_grade_name"],
+                    "bus_factor": employee_data["employee_bus_factor"],
+                    "key": employee_data["employee_key"],
+                },
+            )
 
-        def transform_data(group):
-            employee_info = group.iloc[0]
-            return {
-                "employee_id": int(employee_info["employee_id"]),
-                "employee_name_surname": employee_info["employee_name_surname"],
-                "employee_position_name": employee_info["employee_position_name"],
-                "employee_team_name": employee_info["employee_team_name"],
-                "employee_grade_name": employee_info["employee_grade_name"],
-                "employee_bus_factor": bool(employee_info["employee_bus_factor"]),
-                "employee_key": bool(employee_info["employee_key"]),
-                "skills": [
-                    {
-                        "skill_name": row["skill_name"],
-                        "skill_competence_name": row["skill_competence_name"],
-                        "skill_domain_name": row["skill_domain_name"],
-                        "skill_hard_soft_type": row["skill_hard_soft_type"],
-                        "skill_estimation": int(row["skill_estimation"]),
-                        "skill_accordance": bool(row["skill_accordance"]),
-                        "skill_key": bool(row["skill_key"]),
-                        "skill_education_request": bool(row["skill_education_request"]),
-                        "skill_education_in_progress": bool(row["skill_education_in_progress"]),
-                    }
-                    for _, row in group.iterrows()
-                ]
-            }
-
-        grouped = df.groupby('employee_id')
-
-        employees = [transform_data(group) for _, group in grouped]
-
-        with open('employees.json', 'w', encoding='utf-8') as f:
-            json.dump(employees, f, ensure_ascii=False, indent=4)
-
-        self.stdout.write(self.style.SUCCESS('Данные успешно сконвертированы и сохранены в файл employees.json'))
+            for skill_data in employee_data["skills"]:
+                competence, _ = Competence.objects.get_or_create(
+                    name=skill_data["skill_competence_name"]
+                )
+                Skill.objects.get_or_create(
+                    name=skill_data["skill_name"],
+                    competence=competence,
+                    defaults={
+                        "domain_name": skill_data["skill_domain_name"],
+                        "hard_soft_type": skill_data["skill_hard_soft_type"],
+                        "estimation": skill_data["skill_estimation"],
+                        "accordance": skill_data["skill_accordance"],
+                        "key": skill_data["skill_key"],
+                        "education_request": skill_data["skill_education_request"],
+                        "education_in_progress": skill_data[
+                            "skill_education_in_progress"
+                        ],
+                    },
+                )

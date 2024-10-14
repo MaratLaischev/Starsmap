@@ -1,18 +1,10 @@
 from rest_framework import serializers
+from django.contrib.auth import authenticate
+from django.db import models
 from core.models import (
     Competence, Employee, Grade, Level, Position, RequestTraining,
     RequirementPosition, Skill, Team
 )
-
-
-class GradeDataSerializer(serializers.Serializer):
-    """Сериализатор для вывода грейдов в формате {name: '', value: ''}."""
-    name = serializers.CharField()
-    value = serializers.IntegerField()
-
-    class Meta:
-        model = Grade
-        fields = '__all__'
 
 
 class GradeSerializer(serializers.Serializer):
@@ -20,11 +12,10 @@ class GradeSerializer(serializers.Serializer):
 
     def to_representation(self, instance):
         """Группировка грейдов и подсчет сотрудников."""
-        employees = Employee.objects.values('grade').annotate(
-            count=models.Count('id'))
-        grade_data = [{"name": employee['grade'],
-                       "value": employee['count']} for employee in employees]
-        return grade_data
+        grades = Grade.objects.annotate(
+            count=models.Count('employee')
+        ).values('grade', 'count')
+        return [{'name': grade['grade'], 'value': grade['count']} for grade in grades]
 
 
 class SkillSerializer(serializers.ModelSerializer):
@@ -37,14 +28,16 @@ class SkillSerializer(serializers.ModelSerializer):
     skill_accordance = serializers.BooleanField(source='accordance')
     skill_key = serializers.BooleanField(source='key')
     skill_education_request = serializers.BooleanField(source='education_request')
-    skill_education_in_progress = serializers.BooleanField(source='education_in_progress')
+    skill_education_in_progress = serializers.BooleanField(
+        source='education_in_progress'
+    )
 
     class Meta:
         model = Skill
         fields = [
-            'skill_name', 'skill_competence_name', 'skill_domain_name', 'skill_hard_soft_type',
-            'skill_estimation', 'skill_accordance', 'skill_key',
-            'skill_education_request', 'skill_education_in_progress'
+            'skill_name', 'skill_competence_name', 'skill_domain_name',
+            'skill_hard_soft_type', 'skill_estimation', 'skill_accordance',
+            'skill_key', 'skill_education_request', 'skill_education_in_progress'
         ]
 
 
@@ -69,22 +62,11 @@ class RequirementPositionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class HardSoftSkillsField(serializers.Field):
-    """Кастомное поле для сериализации hard и soft skills."""
-
-    def to_representation(self, value):
-        return value
-
-    def to_internal_value(self, data):
-        return data
-
-
 class SpecialityDataSerializer(serializers.Serializer):
     """Сериализатор для группировки специальностей по грейдам."""
 
     def to_representation(self, instance):
         return instance
-
 
 
 class TeamSerializer(serializers.ModelSerializer):
@@ -108,8 +90,9 @@ class EmployeeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Employee
         fields = [
-            'employee_id', 'employee_name_surname', 'employee_position_name', 'employee_team_name',
-            'employee_grade_name', 'employee_bus_factor', 'employee_key', 'skills'
+            'employee_id', 'employee_name_surname', 'employee_position_name',
+            'employee_team_name', 'employee_grade_name', 'employee_bus_factor',
+            'employee_key', 'skills'
         ]
 
 
@@ -130,3 +113,4 @@ class RequestTrainingSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequestTraining
         fields = '__all__'
+

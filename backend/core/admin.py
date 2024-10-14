@@ -1,6 +1,6 @@
 from django.contrib import admin
 from core.models import (
-    Position, Grade, Competence, Skill, RequirementPosition, Team, 
+    Position, Grade, Competence, Skill, RequirementPosition, Team,
     Employee, RequestTraining, Level
 )
 
@@ -34,7 +34,9 @@ class EmployeeAdmin(admin.ModelAdmin):
 
 
 class RequestTrainingAdmin(admin.ModelAdmin):
-    list_display = ('employee', 'skill', 'desired_result', 'start_date', 'end_date', 'status')
+    list_display = (
+        'employee', 'skill', 'desired_result', 'start_date', 'end_date', 'status',
+    )
 
 
 class LevelAdmin(admin.ModelAdmin):
