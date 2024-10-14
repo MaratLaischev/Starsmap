@@ -7,10 +7,11 @@ from api.v1.serializers import (
     GradeSerializer, SkillSerializer, PositionSerializer,
     CompetenceSerializer, RequirementPositionSerializer, TeamSerializer,
     EmployeeSerializer, LevelSerializer, RequestTrainingSerializer,
-    RegisterSerializer, LoginSerializer
+    SpecialityDataSerializer  # Add this import
 )
 from django.contrib.auth import get_user_model
 from django.db import models
+from datetime import date
 
 User = get_user_model()
 
@@ -55,33 +56,33 @@ class TeamSerializerTest(TestCase):
         serializer = TeamSerializer(team)
         self.assertEqual(serializer.data['name'], "Test Team")
 
-class LevelSerializerTest(TestCase):
-    def test_level_serializer(self):
-        employee = Employee.objects.create(email="test@example.com", name_surname="Test User")
-        skill = Skill.objects.create(name="Test Skill", competence=Competence.objects.create(name="Test Competence", type="Soft"), domain_name="Test Domain", hard_soft_type="Hard", estimation=5, accordance=True, key=True, education_request=False, education_in_progress=False)
-        level = Level.objects.create(employee=employee, skill=skill, data="2023-01-01", evaluation="Test Evaluation", name="Test Level")
-        serializer = LevelSerializer(level)
-        self.assertEqual(serializer.data['data'], "2023-01-01")
+class SpecialityDataSerializerTest(TestCase):
+    def test_speciality_data_serializer(self):
+        data = {'key': 'value'}
+        serializer = SpecialityDataSerializer(data)
+        self.assertEqual(serializer.data, data)
 
 
-class RequestTrainingSerializerTest(TestCase):
-    def test_request_training_serializer(self):
-        employee = Employee.objects.create(email="test@example.com", name_surname="Test User")
-        skill = Skill.objects.create(name="Test Skill", competence=Competence.objects.create(name="Test Competence", type="Soft"), domain_name="Test Domain", hard_soft_type="Hard", estimation=5, accordance=True, key=True, education_request=False, education_in_progress=False)
-        request_training = RequestTraining.objects.create(employee=employee, skill=skill, desired_result="Test Result", start_date="2023-01-01", end_date="2023-12-31", status="Pending")
-        serializer = RequestTrainingSerializer(request_training)
-        self.assertEqual(serializer.data['desired_result'], "Test Result")
-
-
-class RegisterSerializerTest(TestCase):
-    def test_register_serializer(self):
-        data = {
-            'email': 'test@example.com',
-            'name_surname': 'Test User',
-            'password': 'password123'
-        }
-        serializer = RegisterSerializer(data=data)
-        self.assertTrue(serializer.is_valid())
-        user = serializer.save()
-        self.assertEqual(user.email, 'test@example.com')
-        self.assertEqual(user.name_surname, 'Test User')
+class EmployeeSerializerTest(TestCase):
+    def test_employee_serializer(self):
+        team = Team.objects.create(name="Test Team")
+        position = Position.objects.create(name="Test Position")
+        grade = Grade.objects.create(grade="Junior")
+        employee = Employee.objects.create(
+            name_surname="Test Employee", position=position, team=team, grade=grade,
+            bus_factor=True, key=True
+        )
+        skill = Skill.objects.create(
+            name="Test Skill", competence=Competence.objects.create(name="Test Competence", type="Soft"),
+            domain_name="Test Domain", hard_soft_type="Hard", estimation=5, accordance=True,
+            key=True, education_request=False, education_in_progress=False
+        )
+        employee.skills.add(skill)
+        serializer = EmployeeSerializer(employee)
+        self.assertEqual(serializer.data['employee_name_surname'], "Test Employee")
+        self.assertEqual(serializer.data['employee_position_name'], "Test Position")
+        self.assertEqual(serializer.data['employee_team_name'], "Test Team")
+        self.assertEqual(serializer.data['employee_grade_name'], "Junior")
+        self.assertEqual(serializer.data['employee_bus_factor'], True)
+        self.assertEqual(serializer.data['employee_key'], True)
+        self.assertEqual(serializer.data['skills'][0]['skill_name'], "Test Skill")

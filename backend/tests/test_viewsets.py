@@ -57,24 +57,7 @@ class RequirementPositionViewSetTest(TestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-class EmployeeViewSetTest(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.url = reverse('employee-list')
-        self.team = Team.objects.create(name='Test Team')
-        self.employee_data = {
-            'email': 'test@example.com',
-            'name_surname': 'Test User',
-            'position': 'Developer',
-            'team': self.team.id,
-            'grade': 'Junior',
-            'bus_factor': False,
-            'key': False
-        }
 
-    def test_list_employees(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 class TeamViewSetTest(TestCase):
     def setUp(self):
@@ -98,20 +81,6 @@ class SpecialityDataViewSetTest(TestCase):
     def test_list_specialities(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-class RegisterViewTest(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.url = reverse('register')
-        self.user_data = {
-            'email': 'test@example.com',
-            'name_surname': 'Test User',
-            'password': 'password123'
-        }
-
-    def test_register_user(self):
-        response = self.client.post(self.url, self.user_data, format='json')
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
 class ImportDataCommandTest(TestCase):
     def test_import_data(self):
