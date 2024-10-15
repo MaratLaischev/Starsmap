@@ -4,10 +4,10 @@ from core.models import Employee, Skill, Competence
 
 
 class Command(BaseCommand):
-    help = 'Импорт данных из файла employees.json в базу данных'
+    help = "Импорт данных из файла employees.json в базу данных"
 
     def handle(self, *args, **kwargs):
-        with open('employees.json', 'r', encoding='utf-8') as f:
+        with open("employees.json", "r", encoding="utf-8") as f:
             employees = json.load(f)
 
         for employee_data in employees:

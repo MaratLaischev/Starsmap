@@ -23,6 +23,7 @@ db.sqlite3
 
 # Static files
 /staticfiles/
+/static/
 
 # VSCode files
 .vscode/

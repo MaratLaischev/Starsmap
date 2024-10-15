@@ -1,46 +1,58 @@
 from django.contrib import admin
 from core.models import (
-    Position, Grade, Competence, Skill, RequirementPosition, Team,
-    Employee, RequestTraining, Level
+    Position,
+    Grade,
+    Competence,
+    Skill,
+    RequirementPosition,
+    Team,
+    Employee,
+    RequestTraining,
+    Level,
 )
 
 
 class PositionAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ("name",)
 
 
 class GradeAdmin(admin.ModelAdmin):
-    list_display = ('grade',)
+    list_display = ("grade",)
 
 
 class CompetenceAdmin(admin.ModelAdmin):
-    list_display = ('name', 'type')
+    list_display = ("name", "type")
 
 
 class SkillAdmin(admin.ModelAdmin):
-    list_display = ('name', 'competence')
+    list_display = ("name", "competence")
 
 
 class RequirementPositionAdmin(admin.ModelAdmin):
-    list_display = ('position', 'grade', 'skill', 'rating')
+    list_display = ("position", "grade", "skill", "rating")
 
 
 class TeamAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ("name",)
 
 
 class EmployeeAdmin(admin.ModelAdmin):
-    list_display = ('name_surname', 'position', 'team', 'grade', 'bus_factor', 'key')
+    list_display = ("name_surname", "position", "team", "grade", "bus_factor", "key")
 
 
 class RequestTrainingAdmin(admin.ModelAdmin):
     list_display = (
-        'employee', 'skill', 'desired_result', 'start_date', 'end_date', 'status',
+        "employee",
+        "skill",
+        "desired_result",
+        "start_date",
+        "end_date",
+        "status",
     )
 
 
 class LevelAdmin(admin.ModelAdmin):
-    list_display = ('employee', 'skill', 'data', 'evaluation', 'name')
+    list_display = ("employee", "skill", "data", "evaluation", "name")
 
 
 admin.site.register(Position, PositionAdmin)

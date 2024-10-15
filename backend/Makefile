@@ -50,3 +50,6 @@ lint: ## Запускает линтеры
 
 test: ## Запускает тесты
 	python manage.py test
+
+pre-commit: ## Запускает pre-commit
+	pre-commit run --all-files
