@@ -53,7 +53,7 @@ Starsmap - это система по оценке компетенций сот
 1. Клонируйте репозиторий:
     ```shell
     git clone https://github.com/your-username/starsmap.git
-    cd starsmap
+    cd backend
     ```
 
 2. Соберите Docker образы:
@@ -104,14 +104,10 @@ Starsmap - это система по оценке компетенций сот
 - **Swagger UI**: [http://localhost:8000/api/schema/swagger-ui/](http://localhost:8000/api/schema/swagger-ui/)
 - **Redoc**: [http://localhost:8000/api/schema/redoc/](http://localhost:8000/api/schema/redoc/)
 
-- **Проект размещен на сервере, получен домен, настроен SSL-сертификат**: [https://rosbank-hackathon.bounceme.net/swagger/] (https://rosbank-hackathon.bounceme.net/swagger/)
+- **Проект размещен на сервере, получен домен, настроен SSL-сертификат**: [https://rosbank-hackathon.bounceme.net/swagger/](https://rosbank-hackathon.bounceme.net/swagger/)
 
 ## Разработчики
 
-Павел Охрим
+[Павел Охрим](https://github.com/d1g-1t)
 
-[GitHub Profile](https://github.com/d1g-1t)
-
-Марат Лайшев
-
-[GitHub Profile](https://github.com/MaratLaischev)
+[Марат Лайшев](https://github.com/MaratLaischev)
