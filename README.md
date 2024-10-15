@@ -99,13 +99,13 @@ Starsmap - это система по оценке компетенций сот
 
 ## Документация API
 
-Документация API генерируется с использованием `drf-spectacular` и доступна по следующим адресам:
+После локального запуска проекта документация будет доступна по следующим адресам:
 
 - **Swagger UI**: [http://localhost:8000/api/schema/swagger-ui/](http://localhost:8000/api/schema/swagger-ui/)
 - **Redoc**: [http://localhost:8000/api/schema/redoc/](http://localhost:8000/api/schema/redoc/)
 
 - **Проект размещен на сервере, получен домен, настроен SSL-сертификат**:
-- [https://rosbank-hackathon.bounceme.net/swagger/](https://rosbank-hackathon.bounceme.net/swagger/)
+[https://rosbank-hackathon.bounceme.net/swagger/](https://rosbank-hackathon.bounceme.net/swagger/)
 
 ## Разработчики
 
