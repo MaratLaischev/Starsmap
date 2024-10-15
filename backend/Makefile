@@ -39,8 +39,8 @@ push: ## Загружает Docker образ в Docker Hub
 	docker build -t $(DOCKERHUB_USERNAME)/rosbank_backend:latest .
 	docker push $(DOCKERHUB_USERNAME)/rosbank_backend:latest
 
-import: ## Импортирует данные в базу данных
-	python manage.py import_data
+import: migrate ## Импортирует данные в базу данных в контейнере
+	$(DOCKER_COMPOSE) exec web python manage.py import_data
 
 runserver: ## Запускает локальный сервер
 	python manage.py runserver
