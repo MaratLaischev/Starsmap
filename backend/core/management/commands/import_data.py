@@ -2,6 +2,7 @@ import json
 from django.core.management.base import BaseCommand
 from core.models import Competence, Skill, Employee, Team
 
+
 class Command(BaseCommand):
     help = 'Импорт данных из файла employees.json'
 
@@ -10,7 +11,9 @@ class Command(BaseCommand):
             data = json.load(f)
 
         for employee_data in data:
-            team, _ = Team.objects.get_or_create(name=employee_data['employee_team_name'])
+            team, _ = Team.objects.get_or_create(name=employee_data[
+                'employee_team_name'
+            ])
             employee, _ = Employee.objects.get_or_create(
                 id=employee_data['employee_id'],
                 defaults={
@@ -24,7 +27,9 @@ class Command(BaseCommand):
             )
 
             for skill_data in employee_data['skills']:
-                competence, _ = Competence.objects.get_or_create(name=skill_data['skill_competence_name'])
+                competence, _ = Competence.objects.get_or_create(
+                    name=skill_data['skill_competence_name']
+                )
                 skill, _ = Skill.objects.get_or_create(
                     name=skill_data['skill_name'],
                     defaults={
@@ -34,8 +39,12 @@ class Command(BaseCommand):
                         'estimation': skill_data['skill_estimation'],
                         'accordance': skill_data['skill_accordance'],
                         'key': skill_data['skill_key'],
-                        'education_request': skill_data['skill_education_request'],
-                        'education_in_progress': skill_data['skill_education_in_progress']
+                        'education_request': skill_data[
+                            'skill_education_request'
+                        ],
+                        'education_in_progress': skill_data[
+                            'skill_education_in_progress'
+                        ]
                     }
                 )
                 employee.skills.add(skill)

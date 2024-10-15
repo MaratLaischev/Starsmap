@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from django.contrib.auth import authenticate
 from django.db import models
 from core.models import (
     Competence, Employee, Grade, Level, Position, RequestTraining,
@@ -113,4 +112,3 @@ class RequestTrainingSerializer(serializers.ModelSerializer):
     class Meta:
         model = RequestTraining
         fields = '__all__'
-
