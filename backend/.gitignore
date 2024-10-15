@@ -1,0 +1,46 @@
+# Virtual environment
+venv
+
+# Python cache
+__pycache__
+
+# Environment variables
+.env
+
+# Ruff cache
+.ruff*
+
+# SQLite database files
+*.sqlite3
+db.sqlite3
+
+# Django migrations
+*/migrations/*
+
+# Cache
+*.cache
+*.pyc
+
+# Static files
+/static/
+
+# VSCode files
+.vscode/
+
+# PyCharm files
+.idea/
+
+# Standard exclusions
+*.log
+*.pot
+*.pyc
+*.pyo
+*.swp
+*.tmp
+*.bak
+*.orig
+*.rej
+*.swo
+*.swn
+.DS_Store
+Thumbs.db

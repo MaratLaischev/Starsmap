@@ -1,0 +1,25 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: trailing-whitespace
+        exclude: ^static/
+      - id: end-of-file-fixer
+        exclude: ^static/
+      - id: check-yaml
+        exclude: ^static/
+      - id: check-added-large-files
+        exclude: ^static/
+
+  - repo: https://github.com/psf/black
+    rev: 22.3.0
+    hooks:
+      - id: black
+        exclude: ^static/
+
+  - repo: https://github.com/PyCQA/flake8
+    rev: 4.0.1
+    hooks:
+      - id: flake8
+        args: [--max-line-length=88]
+        exclude: ^static/
