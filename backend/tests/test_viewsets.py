@@ -1,10 +1,11 @@
-from django.test import TestCase
-from rest_framework.test import APIClient
-from rest_framework import status
-from django.urls import reverse
-from django.contrib.auth import get_user_model
 from io import StringIO
+
+from django.contrib.auth import get_user_model
 from django.core.management import call_command
+from django.test import TestCase
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APIClient
 
 User = get_user_model()
 
@@ -13,7 +14,7 @@ class GradeDataViewSetTest(TestCase):
     # Настройка клиента и URL для тестов
     def setUp(self):
         self.client = APIClient()
-        self.url = reverse('grades-list')
+        self.url = reverse("grades-list")
 
     # Тест на получение списка уровней
     def test_list_grades(self):
@@ -25,7 +26,7 @@ class SkillViewSetTest(TestCase):
     # Настройка клиента и URL для тестов
     def setUp(self):
         self.client = APIClient()
-        self.url = reverse('skill-list')
+        self.url = reverse("skill-list")
 
     # Тест на получение списка навыков
     def test_list_skills(self):
@@ -37,7 +38,7 @@ class PositionViewSetTest(TestCase):
     # Настройка клиента и URL для тестов
     def setUp(self):
         self.client = APIClient()
-        self.url = reverse('positions-list')
+        self.url = reverse("positions-list")
 
     # Тест на получение списка должностей
     def test_list_positions(self):
@@ -49,7 +50,7 @@ class CompetenceViewSetTest(TestCase):
     # Настройка клиента и URL для тестов
     def setUp(self):
         self.client = APIClient()
-        self.url = reverse('competences-list')
+        self.url = reverse("competences-list")
 
     # Тест на получение списка компетенций
     def test_list_competences(self):
@@ -61,7 +62,7 @@ class RequirementPositionViewSetTest(TestCase):
     # Настройка клиента и URL для тестов
     def setUp(self):
         self.client = APIClient()
-        self.url = reverse('requirementpositions-list')
+        self.url = reverse("requirementpositions-list")
 
     # Тест на получение списка требований к должностям
     def test_list_requirement_positions(self):
@@ -73,12 +74,12 @@ class TeamViewSetTest(TestCase):
     # Настройка клиента и URL для тестов
     def setUp(self):
         self.client = APIClient()
-        self.url = reverse('team-list')
-        self.team_data = {'name': 'Test Team'}
+        self.url = reverse("team-list")
+        self.team_data = {"name": "Test Team"}
 
     # Тест на создание команды
     def test_create_team(self):
-        response = self.client.post(self.url, self.team_data, format='json')
+        response = self.client.post(self.url, self.team_data, format="json")
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
 
     # Тест на получение списка команд
@@ -91,7 +92,7 @@ class SpecialityDataViewSetTest(TestCase):
     # Настройка клиента и URL для тестов
     def setUp(self):
         self.client = APIClient()
-        self.url = reverse('specialities-list')
+        self.url = reverse("specialities-list")
 
     # Тест на получение списка специальностей
     def test_list_specialities(self):
@@ -103,5 +104,5 @@ class ImportDataCommandTest(TestCase):
     # Тест на импорт данных
     def test_import_data(self):
         out = StringIO()
-        call_command('import_data', stdout=out)
-        self.assertIn('Импорт данных успешно завершен', out.getvalue())
+        call_command("import_data", stdout=out)
+        self.assertIn("Импорт данных успешно завершен", out.getvalue())

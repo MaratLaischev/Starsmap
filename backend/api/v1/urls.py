@@ -1,25 +1,26 @@
-from django.urls import path
+from django.urls import include, path
 from drf_spectacular.views import (
     SpectacularAPIView,
-    SpectacularSwaggerView,
     SpectacularRedocView,
+    SpectacularSwaggerView,
 )
-from django.urls import include
 from rest_framework.routers import DefaultRouter
+
 from .views import (
+    CompetenceViewSet,
     EmployeeViewSet,
+    GradeDataViewSet,
     LevelViewSet,
+    PositionViewSet,
     RequestTrainingViewSet,
+    RequirementPositionViewSet,
     SkillViewSet,
     SpecialityDataViewSet,
     TeamViewSet,
-    GradeDataViewSet,
-    CompetenceViewSet,
-    PositionViewSet,
-    RequirementPositionViewSet,
 )
 
 router = DefaultRouter()
+
 router.register(r"employees", EmployeeViewSet)
 router.register(r"teams", TeamViewSet)
 router.register(r"skills", SkillViewSet)

@@ -22,7 +22,6 @@ db.sqlite3
 *.pyc
 
 # Static files
-/staticfiles/
 /static/
 
 # VSCode files

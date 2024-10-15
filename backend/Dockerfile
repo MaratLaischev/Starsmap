@@ -11,7 +11,7 @@ ARG UID=1000
 
 RUN groupadd -g "${GID}" -r web \
   && useradd -d '/code' -g web -l -r -u "${UID}" web \
-  && mkdir -p '/code/staticfiles' '/code/media' \
+  && mkdir -p '/code/static' '/code/media' \
   && chown -R web:web /code \
   && chmod -R 777 /code
 

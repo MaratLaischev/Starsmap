@@ -1,46 +1,63 @@
 from django.contrib import admin
+
 from core.models import (
-    Position,
-    Grade,
     Competence,
-    Skill,
-    RequirementPosition,
-    Team,
     Employee,
-    RequestTraining,
+    Grade,
     Level,
+    Position,
+    RequestTraining,
+    RequirementPosition,
+    Skill,
+    Team,
 )
 
 
 class PositionAdmin(admin.ModelAdmin):
+    """Админ-панель для модели Position."""
+
     list_display = ("name",)
 
 
 class GradeAdmin(admin.ModelAdmin):
+    """Админ-панель для модели Grade."""
+
     list_display = ("grade",)
 
 
 class CompetenceAdmin(admin.ModelAdmin):
+    """Админ-панель для модели Competence."""
+
     list_display = ("name", "type")
 
 
 class SkillAdmin(admin.ModelAdmin):
+    """Админ-панель для модели Skill."""
+
     list_display = ("name", "competence")
 
 
 class RequirementPositionAdmin(admin.ModelAdmin):
+    """Админ-панель для модели RequirementPosition."""
+
     list_display = ("position", "grade", "skill", "rating")
 
 
 class TeamAdmin(admin.ModelAdmin):
+    """Админ-панель для модели Team."""
+
     list_display = ("name",)
 
 
 class EmployeeAdmin(admin.ModelAdmin):
+    """Админ-панель для модели Employee."""
+
     list_display = ("name_surname", "position", "team", "grade", "bus_factor", "key")
 
 
 class RequestTrainingAdmin(admin.ModelAdmin):
+    """Админ-панель для модели RequestTraining."""
+
     list_display = (
         "employee",
         "skill",
@@ -52,6 +69,8 @@ class RequestTrainingAdmin(admin.ModelAdmin):
 
 
 class LevelAdmin(admin.ModelAdmin):
+    """Админ-панель для модели Level."""
+
     list_display = ("employee", "skill", "data", "evaluation", "name")
 
 

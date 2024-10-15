@@ -1,7 +1,15 @@
 from django.test import TestCase
+
 from core.models import (
-    Competence, Skill, Employee, Team, Position, Grade, RequestTraining, Level,
-    RequirementPosition
+    Competence,
+    Skill,
+    Employee,
+    Team,
+    Position,
+    Grade,
+    RequestTraining,
+    Level,
+    RequirementPosition,
 )
 
 
@@ -32,9 +40,15 @@ class SkillModelTest(TestCase):
     def test_create_skill(self):
         competence = Competence.objects.create(name="Test Competence", type="Soft")
         skill = Skill.objects.create(
-            name="Test Skill", competence=competence, domain_name="Test Domain",
-            hard_soft_type="Hard", estimation=5, accordance=True, key=True,
-            education_request=False, education_in_progress=False
+            name="Test Skill",
+            competence=competence,
+            domain_name="Test Domain",
+            hard_soft_type="Hard",
+            estimation=5,
+            accordance=True,
+            key=True,
+            education_request=False,
+            education_in_progress=False,
         )
         self.assertEqual(skill.name, "Test Skill")
         self.assertEqual(skill.competence, competence)
@@ -43,9 +57,15 @@ class SkillModelTest(TestCase):
     def test_update_skill(self):
         competence = Competence.objects.create(name="Test Competence", type="Soft")
         skill = Skill.objects.create(
-            name="Test Skill", competence=competence, domain_name="Test Domain",
-            hard_soft_type="Hard", estimation=5, accordance=True, key=True,
-            education_request=False, education_in_progress=False
+            name="Test Skill",
+            competence=competence,
+            domain_name="Test Domain",
+            hard_soft_type="Hard",
+            estimation=5,
+            accordance=True,
+            key=True,
+            education_request=False,
+            education_in_progress=False,
         )
         skill.name = "Updated Skill"
         skill.save()
@@ -55,9 +75,15 @@ class SkillModelTest(TestCase):
     def test_delete_skill(self):
         competence = Competence.objects.create(name="Test Competence", type="Soft")
         skill = Skill.objects.create(
-            name="Test Skill", competence=competence, domain_name="Test Domain",
-            hard_soft_type="Hard", estimation=5, accordance=True, key=True,
-            education_request=False, education_in_progress=False
+            name="Test Skill",
+            competence=competence,
+            domain_name="Test Domain",
+            hard_soft_type="Hard",
+            estimation=5,
+            accordance=True,
+            key=True,
+            education_request=False,
+            education_in_progress=False,
         )
         skill_id = skill.id
         skill.delete()
@@ -112,11 +138,15 @@ class RequirementPositionModelTest(TestCase):
         position = Position.objects.create(name="Test Position")
         grade = Grade.objects.create(grade="Junior")
         skill = Skill.objects.create(
-            name="Test Skill", competence=Competence.objects.create(
-                name="Test Competence", type="Soft"
-            ), domain_name="Test Domain", hard_soft_type="Hard", estimation=5,
-            accordance=True, key=True, education_request=False,
-            education_in_progress=False
+            name="Test Skill",
+            competence=Competence.objects.create(name="Test Competence", type="Soft"),
+            domain_name="Test Domain",
+            hard_soft_type="Hard",
+            estimation=5,
+            accordance=True,
+            key=True,
+            education_request=False,
+            education_in_progress=False,
         )
         requirement_position = RequirementPosition.objects.create(
             position=position, grade=grade, skill=skill, rating=5
@@ -128,11 +158,15 @@ class RequirementPositionModelTest(TestCase):
         position = Position.objects.create(name="Test Position")
         grade = Grade.objects.create(grade="Junior")
         skill = Skill.objects.create(
-            name="Test Skill", competence=Competence.objects.create(
-                name="Test Competence", type="Soft"
-            ), domain_name="Test Domain", hard_soft_type="Hard", estimation=5,
-            accordance=True, key=True, education_request=False,
-            education_in_progress=False
+            name="Test Skill",
+            competence=Competence.objects.create(name="Test Competence", type="Soft"),
+            domain_name="Test Domain",
+            hard_soft_type="Hard",
+            estimation=5,
+            accordance=True,
+            key=True,
+            education_request=False,
+            education_in_progress=False,
         )
         requirement_position = RequirementPosition.objects.create(
             position=position, grade=grade, skill=skill, rating=5
@@ -146,20 +180,24 @@ class RequirementPositionModelTest(TestCase):
         position = Position.objects.create(name="Test Position")
         grade = Grade.objects.create(grade="Junior")
         skill = Skill.objects.create(
-            name="Test Skill", competence=Competence.objects.create(
-                name="Test Competence", type="Soft"
-            ), domain_name="Test Domain", hard_soft_type="Hard", estimation=5,
-            accordance=True, key=True, education_request=False,
-            education_in_progress=False
+            name="Test Skill",
+            competence=Competence.objects.create(name="Test Competence", type="Soft"),
+            domain_name="Test Domain",
+            hard_soft_type="Hard",
+            estimation=5,
+            accordance=True,
+            key=True,
+            education_request=False,
+            education_in_progress=False,
         )
         requirement_position = RequirementPosition.objects.create(
             position=position, grade=grade, skill=skill, rating=5
         )
         requirement_position_id = requirement_position.id
         requirement_position.delete()
-        self.assertFalse(RequirementPosition.objects.filter(
-            id=requirement_position_id
-        ).exists())
+        self.assertFalse(
+            RequirementPosition.objects.filter(id=requirement_position_id).exists()
+        )
 
 
 class TeamModelTest(TestCase):
@@ -188,8 +226,12 @@ class EmployeeModelTest(TestCase):
     def test_create_employee(self):
         team = Team.objects.create(name="Test Team")
         employee = Employee.objects.create(
-            name_surname="Test User", position="Developer", team=team,
-            grade="Junior", bus_factor=True, key=True
+            name_surname="Test User",
+            position="Developer",
+            team=team,
+            grade="Junior",
+            bus_factor=True,
+            key=True,
         )
         self.assertEqual(employee.name_surname, "Test User")
 
@@ -197,8 +239,12 @@ class EmployeeModelTest(TestCase):
     def test_update_employee(self):
         team = Team.objects.create(name="Test Team")
         employee = Employee.objects.create(
-            name_surname="Test User", position="Developer", team=team,
-            grade="Junior", bus_factor=True, key=True
+            name_surname="Test User",
+            position="Developer",
+            team=team,
+            grade="Junior",
+            bus_factor=True,
+            key=True,
         )
         employee.name_surname = "Updated User"
         employee.save()
@@ -208,8 +254,12 @@ class EmployeeModelTest(TestCase):
     def test_delete_employee(self):
         team = Team.objects.create(name="Test Team")
         employee = Employee.objects.create(
-            name_surname="Test User", position="Developer", team=team,
-            grade="Junior", bus_factor=True, key=True
+            name_surname="Test User",
+            position="Developer",
+            team=team,
+            grade="Junior",
+            bus_factor=True,
+            key=True,
         )
         employee_id = employee.id
         employee.delete()
@@ -221,18 +271,32 @@ class RequestTrainingModelTest(TestCase):
     def test_create_request_training(self):
         team = Team.objects.create(name="Test Team")
         employee = Employee.objects.create(
-            name_surname="Test User", position="Developer", team=team,
-            grade="Junior", bus_factor=True, key=True
+            name_surname="Test User",
+            position="Developer",
+            team=team,
+            grade="Junior",
+            bus_factor=True,
+            key=True,
         )
         competence = Competence.objects.create(name="Test Competence", type="Soft")
         skill = Skill.objects.create(
-            name="Test Skill", competence=competence, domain_name="Test Domain",
-            hard_soft_type="Hard", estimation=5, accordance=True, key=True,
-            education_request=False, education_in_progress=False
+            name="Test Skill",
+            competence=competence,
+            domain_name="Test Domain",
+            hard_soft_type="Hard",
+            estimation=5,
+            accordance=True,
+            key=True,
+            education_request=False,
+            education_in_progress=False,
         )
         request_training = RequestTraining.objects.create(
-            employee=employee, skill=skill, desired_result="Improve Skill",
-            start_date="2023-01-01", end_date="2023-12-31", status="Pending"
+            employee=employee,
+            skill=skill,
+            desired_result="Improve Skill",
+            start_date="2023-01-01",
+            end_date="2023-12-31",
+            status="Pending",
         )
         self.assertEqual(request_training.desired_result, "Improve Skill")
 
@@ -240,18 +304,32 @@ class RequestTrainingModelTest(TestCase):
     def test_update_request_training(self):
         team = Team.objects.create(name="Test Team")
         employee = Employee.objects.create(
-            name_surname="Test User", position="Developer", team=team,
-            grade="Junior", bus_factor=True, key=True
+            name_surname="Test User",
+            position="Developer",
+            team=team,
+            grade="Junior",
+            bus_factor=True,
+            key=True,
         )
         competence = Competence.objects.create(name="Test Competence", type="Soft")
         skill = Skill.objects.create(
-            name="Test Skill", competence=competence, domain_name="Test Domain",
-            hard_soft_type="Hard", estimation=5, accordance=True, key=True,
-            education_request=False, education_in_progress=False
+            name="Test Skill",
+            competence=competence,
+            domain_name="Test Domain",
+            hard_soft_type="Hard",
+            estimation=5,
+            accordance=True,
+            key=True,
+            education_request=False,
+            education_in_progress=False,
         )
         request_training = RequestTraining.objects.create(
-            employee=employee, skill=skill, desired_result="Improve Skill",
-            start_date="2023-01-01", end_date="2023-12-31", status="Pending"
+            employee=employee,
+            skill=skill,
+            desired_result="Improve Skill",
+            start_date="2023-01-01",
+            end_date="2023-12-31",
+            status="Pending",
         )
         request_training.desired_result = "Master Skill"
         request_training.save()
@@ -261,18 +339,32 @@ class RequestTrainingModelTest(TestCase):
     def test_delete_request_training(self):
         team = Team.objects.create(name="Test Team")
         employee = Employee.objects.create(
-            name_surname="Test User", position="Developer", team=team,
-            grade="Junior", bus_factor=True, key=True
+            name_surname="Test User",
+            position="Developer",
+            team=team,
+            grade="Junior",
+            bus_factor=True,
+            key=True,
         )
         competence = Competence.objects.create(name="Test Competence", type="Soft")
         skill = Skill.objects.create(
-            name="Test Skill", competence=competence, domain_name="Test Domain",
-            hard_soft_type="Hard", estimation=5, accordance=True, key=True,
-            education_request=False, education_in_progress=False
+            name="Test Skill",
+            competence=competence,
+            domain_name="Test Domain",
+            hard_soft_type="Hard",
+            estimation=5,
+            accordance=True,
+            key=True,
+            education_request=False,
+            education_in_progress=False,
         )
         request_training = RequestTraining.objects.create(
-            employee=employee, skill=skill, desired_result="Improve Skill",
-            start_date="2023-01-01", end_date="2023-12-31", status="Pending"
+            employee=employee,
+            skill=skill,
+            desired_result="Improve Skill",
+            start_date="2023-01-01",
+            end_date="2023-12-31",
+            status="Pending",
         )
         request_training_id = request_training.id
         request_training.delete()
@@ -286,18 +378,31 @@ class LevelModelTest(TestCase):
     def test_create_level(self):
         team = Team.objects.create(name="Test Team")
         employee = Employee.objects.create(
-            name_surname="Test User", position="Developer", team=team,
-            grade="Junior", bus_factor=True, key=True
+            name_surname="Test User",
+            position="Developer",
+            team=team,
+            grade="Junior",
+            bus_factor=True,
+            key=True,
         )
         competence = Competence.objects.create(name="Test Competence", type="Soft")
         skill = Skill.objects.create(
-            name="Test Skill", competence=competence, domain_name="Test Domain",
-            hard_soft_type="Hard", estimation=5, accordance=True, key=True,
-            education_request=False, education_in_progress=False
+            name="Test Skill",
+            competence=competence,
+            domain_name="Test Domain",
+            hard_soft_type="Hard",
+            estimation=5,
+            accordance=True,
+            key=True,
+            education_request=False,
+            education_in_progress=False,
         )
         level = Level.objects.create(
-            employee=employee, skill=skill, data="2023-01-01", evaluation="Expert",
-            name="Level 1"
+            employee=employee,
+            skill=skill,
+            data="2023-01-01",
+            evaluation="Expert",
+            name="Level 1",
         )
         self.assertEqual(level.evaluation, "Expert")
 
@@ -305,18 +410,31 @@ class LevelModelTest(TestCase):
     def test_update_level(self):
         team = Team.objects.create(name="Test Team")
         employee = Employee.objects.create(
-            name_surname="Test User", position="Developer", team=team,
-            grade="Junior", bus_factor=True, key=True
+            name_surname="Test User",
+            position="Developer",
+            team=team,
+            grade="Junior",
+            bus_factor=True,
+            key=True,
         )
         competence = Competence.objects.create(name="Test Competence", type="Soft")
         skill = Skill.objects.create(
-            name="Test Skill", competence=competence, domain_name="Test Domain",
-            hard_soft_type="Hard", estimation=5, accordance=True, key=True,
-            education_request=False, education_in_progress=False
+            name="Test Skill",
+            competence=competence,
+            domain_name="Test Domain",
+            hard_soft_type="Hard",
+            estimation=5,
+            accordance=True,
+            key=True,
+            education_request=False,
+            education_in_progress=False,
         )
         level = Level.objects.create(
-            employee=employee, skill=skill, data="2023-01-01", evaluation="Expert",
-            name="Level 1"
+            employee=employee,
+            skill=skill,
+            data="2023-01-01",
+            evaluation="Expert",
+            name="Level 1",
         )
         level.evaluation = "Master"
         level.save()
@@ -326,18 +444,31 @@ class LevelModelTest(TestCase):
     def test_delete_level(self):
         team = Team.objects.create(name="Test Team")
         employee = Employee.objects.create(
-            name_surname="Test User", position="Developer", team=team,
-            grade="Junior", bus_factor=True, key=True
+            name_surname="Test User",
+            position="Developer",
+            team=team,
+            grade="Junior",
+            bus_factor=True,
+            key=True,
         )
         competence = Competence.objects.create(name="Test Competence", type="Soft")
         skill = Skill.objects.create(
-            name="Test Skill", competence=competence, domain_name="Test Domain",
-            hard_soft_type="Hard", estimation=5, accordance=True, key=True,
-            education_request=False, education_in_progress=False
+            name="Test Skill",
+            competence=competence,
+            domain_name="Test Domain",
+            hard_soft_type="Hard",
+            estimation=5,
+            accordance=True,
+            key=True,
+            education_request=False,
+            education_in_progress=False,
         )
         level = Level.objects.create(
-            employee=employee, skill=skill, data="2023-01-01", evaluation="Expert",
-            name="Level 1"
+            employee=employee,
+            skill=skill,
+            data="2023-01-01",
+            evaluation="Expert",
+            name="Level 1",
         )
         level_id = level.id
         level.delete()
