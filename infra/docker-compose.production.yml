@@ -6,7 +6,7 @@ services:
 
   backend:
     container_name: backend_container
-    image: #указать образ контейнера 
+    image: ${DOCKERHUB_USERNAME}/rosbank_backend:latest
     restart: always
     env_file: .env
     volumes:
